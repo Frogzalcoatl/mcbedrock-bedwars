@@ -1,0 +1,24 @@
+{
+	"dependencies": [
+		{
+			"uuid": "1ea0288f-1f50-4b20-ba90-48acdaa922ef",
+			"version": [1, 0, 0]
+		}
+	],
+	"format_version": 2,
+	"header": {
+		"description": "Made with moderate amounts of care.",
+		"min_engine_version": [1, 26, 50],
+		"name": "Addon Starter",
+		"uuid": "ccf32bcf-fb87-4435-8e9e-f4eb62b4ba54",
+		"version": [1, 0, 0]
+	},
+	"modules": [
+		{
+			"description": "Resource Pack Module",
+			"type": "resources",
+			"uuid": "1edca284-7133-43ce-ae8d-ecc9feb60666",
+			"version": [1, 0, 0]
+		}
+	]
+}
