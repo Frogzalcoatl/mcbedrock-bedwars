@@ -2,30 +2,26 @@
 	"dependencies": [
 		{
 			"module_name": "@minecraft/server",
-			"version": "2.10.0"
+			"version": "beta"
 		},
 		{
 			"module_name": "@minecraft/server-ui",
-			"version": "2.2.0"
-		},
-		{
-			"uuid": "ccf32bcf-fb87-4435-8e9e-f4eb62b4ba54",
-			"version": [1, 0, 0]
+			"version": "beta"
 		}
 	],
 	"format_version": 2,
 	"header": {
-		"description": "Made with moderate amounts of care.",
-		"min_engine_version": [1, 26, 50],
-		"name": "Addon Starter",
-		"uuid": "1ea0288f-1f50-4b20-ba90-48acdaa922ef",
+		"description": "by Frogzalcoatl",
+		"min_engine_version": [1, 26, 60],
+		"name": "Frog's Bedwars",
+		"uuid": "867b45fd-4a79-4ce6-9cb9-a01d3f5f1746",
 		"version": [1, 0, 0]
 	},
 	"modules": [
 		{
 			"description": "Addon Module",
 			"type": "data",
-			"uuid": "6164d51f-d279-40d3-b71e-a192b62d42fb",
+			"uuid": "b5c5e58a-9f80-49b2-bb65-74670b11edd3",
 			"version": [1, 0, 0]
 		},
 		{
@@ -33,7 +29,7 @@
 			"entry": "scripts/main.esm.js",
 			"language": "javascript",
 			"type": "script",
-			"uuid": "e6eeceee-5020-4c64-b9ed-43cd04822296",
+			"uuid": "b5e483f4-24af-4397-a826-aab625dc5491",
 			"version": [1, 0, 0]
 		}
 	]

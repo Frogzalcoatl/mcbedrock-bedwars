@@ -8,33 +8,15 @@ const MCADDON_FILENAME = "addon.mcaddon";
 const OUTPUT_DIRECTORY_NAME = "_temp_mcpack_directory";
 
 const PROJECT_ROOT = _resolve(import.meta.dirname, "..");
-const BEHAVIORS_DIRECTORY = join(PROJECT_ROOT, "behaviors");
-const RESOURCES_DIRECTORY = join(PROJECT_ROOT, "resources");
+const SCRIPTS_DIRECTORY = join(PROJECT_ROOT, "scripts");
 const OUTPUT_DIRECTORY = join(PROJECT_ROOT, OUTPUT_DIRECTORY_NAME);
-const BEHAVIOR_OUTPUT_DIRECTORY = join(OUTPUT_DIRECTORY, "behaviors");
-const RESOURCE_OUTPUT_DIRECTORY = join(OUTPUT_DIRECTORY, "resources");
-
-const SKIP_DIRECTORIES = ["source"];
-const LICENSE_PATH = join(PROJECT_ROOT, "LICENSE.md");
-
-async function copyDirectory(source, destination) {
-	await promisesFs.mkdir(destination, { recursive: true });
-	const promises = [];
-	for (const entry of await promisesFs.readdir(source, { withFileTypes: true })) {
-		const name = entry.name;
-		const sourcePath = join(source, name);
-		const destinationPath = join(destination, name);
-		if (entry.isDirectory()) {
-			if (SKIP_DIRECTORIES.includes(name)) {
-				continue;
-			}
-			promises.push(copyDirectory(sourcePath, destinationPath));
-		} else {
-			promises.push(promisesFs.copyFile(sourcePath, destinationPath));
-		}
-	}
-	await Promise.all(promises);
-}
+const SCRIPTS_OUTPUT_DIRECTORY = join(OUTPUT_DIRECTORY, "scripts");
+const SCRIPTS_FILE_PATH = join(SCRIPTS_DIRECTORY, "main.esm.js");
+const FILE_PATHS = [
+	join(PROJECT_ROOT, "LICENSE.md"),
+	join(PROJECT_ROOT, "manifest.json"),
+	join(PROJECT_ROOT, "pack_icon.png"),
+];
 
 async function copyFileToDirectory(filePath, destination) {
 	await promisesFs.mkdir(destination, { recursive: true });
@@ -66,10 +48,10 @@ async function build() {
 		await promisesFs.rm(OUTPUT_DIRECTORY, { force: true, recursive: true });
 
 		console.log(`Creating temporary directory at: ${OUTPUT_DIRECTORY}`);
-		await copyDirectory(BEHAVIORS_DIRECTORY, BEHAVIOR_OUTPUT_DIRECTORY);
-		await copyFileToDirectory(LICENSE_PATH, BEHAVIOR_OUTPUT_DIRECTORY);
-		await copyDirectory(RESOURCES_DIRECTORY, RESOURCE_OUTPUT_DIRECTORY);
-		await copyFileToDirectory(LICENSE_PATH, RESOURCE_OUTPUT_DIRECTORY);
+		copyFileToDirectory(SCRIPTS_FILE_PATH, SCRIPTS_OUTPUT_DIRECTORY);
+		for (const path of FILE_PATHS) {
+			copyFileToDirectory(path, OUTPUT_DIRECTORY);
+		}
 		console.log("Successfully copied files.");
 
 		const zipFilePath = join(PROJECT_ROOT, MCADDON_FILENAME);
