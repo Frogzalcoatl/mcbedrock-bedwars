@@ -29,7 +29,9 @@ export class ItemGenerator {
 
 	public set intervalTicks(val: number) {
 		this._intervalTicks = val;
-		this.startup();
+		if (this._intervalId !== null) {
+			this.startup();
+		}
 	}
 
 	public shutdown(): void {
