@@ -10,7 +10,7 @@ import {
 	system,
 	world,
 } from "@minecraft/server";
-import { SimulatedPlayer } from "@minecraft/server-gametest";
+import { SimulatedPlayer, spawnSimulatedPlayer } from "@minecraft/server-gametest";
 import { MinecraftDimensionTypes } from "@minecraft/vanilla-data";
 import { PACK_NAMESPACE } from "../constants";
 import { getDimensionFromOrigin } from "./commandOrigin";
@@ -65,6 +65,7 @@ system.beforeEvents.startup.subscribe((event: StartupEvent): void => {
 			system.run(() => {
 				for (const p of world.getAllPlayers()) {
 					if (p instanceof SimulatedPlayer) {
+						p.disconnect();
 					}
 				}
 			});

@@ -15,13 +15,13 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@minecraft/server':
-        specifier: ^2.11.0
+        specifier: 2.11.0
         version: 2.11.0(@minecraft/common@1.2.0)(@minecraft/vanilla-data@1.26.60)
       '@minecraft/server-gametest':
-        specifier: ^1.0.0-beta.1.26.61-stable
-        version: 1.0.0-internal.00001b39
+        specifier: 1.0.0-beta.1.26.60-stable
+        version: 1.0.0-beta.1.26.60-stable(@minecraft/common@1.2.0)(@minecraft/server@2.11.0(@minecraft/common@1.2.0)(@minecraft/vanilla-data@1.26.60))
       '@minecraft/server-ui':
-        specifier: ^2.3.0
+        specifier: 2.3.0
         version: 2.3.0(@minecraft/common@1.2.0)(@minecraft/server@2.11.0(@minecraft/common@1.2.0)(@minecraft/vanilla-data@1.26.60))
       '@minecraft/vanilla-data':
         specifier: ^1.26.60
@@ -263,19 +263,17 @@ packages:
   '@minecraft/common@1.2.0':
     resolution: {integrity: sha512-JdmEq4P3Z/FtoBzhLijFgMSVFnFRrUoLwY8DHHrgtFo0mfLTOLTB1RErYjLMsA6b7BGVNxkX/pfFRiH7QZ0XwQ==}
 
-  '@minecraft/server-gametest@1.0.0-internal.00001b39':
-    resolution: {integrity: sha512-ektfFBdp7hovP6nJNrPQkNpoalbkKrZqDGIL+V8OOc32ByOjMS3mSozzjKX4YNh8pRp98FniWj1s5xUnh2F/eA==}
-    deprecated: Test package, please ignore
+  '@minecraft/server-gametest@1.0.0-beta.1.26.60-stable':
+    resolution: {integrity: sha512-cpEzSKe0eGEMhRl+XANIvYqbx0awgFTv6RqIATvQf5KOWmY7Co8vmO1+kROun7hfsCH9RsbQCHmMhuAxolE9hA==}
+    peerDependencies:
+      '@minecraft/common': ^1.0.0
+      '@minecraft/server': ^1.17.0 || ^2.0.0 || ^2.12.0-beta.1.26.60-stable
 
   '@minecraft/server-ui@2.3.0':
     resolution: {integrity: sha512-ziMm+Vww85F8xblLh3TdeuH79axWvPoaFamhBmaTxQdvjs9CyytMsd0HSCwQNrAqVyJEohD9JqL40RxqSJnLiw==}
     peerDependencies:
       '@minecraft/common': ^1.0.0
       '@minecraft/server': ^2.0.0
-
-  '@minecraft/server@1.0.0-internal.00001b39':
-    resolution: {integrity: sha512-+7XlreW2OnK3yIr4HClAWnGq6P0xUYpYt3mZUF891rBvAwEPzb7iSBiJeq7hls7OtHPHFVs710542qCRBJos1w==}
-    deprecated: Test package, please ignore
 
   '@minecraft/server@2.11.0':
     resolution: {integrity: sha512-w3iTWtltjahU95RSIkGXtFxf9gABY8OGMzruLq5A5WnLbrA2lwwsdA47ymXo0F4z290wuK8lOs9Emsv2yAg4Yg==}
@@ -719,16 +717,15 @@ snapshots:
 
   '@minecraft/common@1.2.0': {}
 
-  '@minecraft/server-gametest@1.0.0-internal.00001b39':
+  '@minecraft/server-gametest@1.0.0-beta.1.26.60-stable(@minecraft/common@1.2.0)(@minecraft/server@2.11.0(@minecraft/common@1.2.0)(@minecraft/vanilla-data@1.26.60))':
     dependencies:
-      '@minecraft/server': 1.0.0-internal.00001b39
+      '@minecraft/common': 1.2.0
+      '@minecraft/server': 2.11.0(@minecraft/common@1.2.0)(@minecraft/vanilla-data@1.26.60)
 
   '@minecraft/server-ui@2.3.0(@minecraft/common@1.2.0)(@minecraft/server@2.11.0(@minecraft/common@1.2.0)(@minecraft/vanilla-data@1.26.60))':
     dependencies:
       '@minecraft/common': 1.2.0
       '@minecraft/server': 2.11.0(@minecraft/common@1.2.0)(@minecraft/vanilla-data@1.26.60)
-
-  '@minecraft/server@1.0.0-internal.00001b39': {}
 
   '@minecraft/server@2.11.0(@minecraft/common@1.2.0)(@minecraft/vanilla-data@1.26.60)':
     dependencies:
