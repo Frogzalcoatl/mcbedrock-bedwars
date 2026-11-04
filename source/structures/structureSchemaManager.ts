@@ -21,7 +21,7 @@ export class StructureSchemaManager {
 
 	public addSchemas(schemas: [string, unknown][]): void {
 		for (const s of schemas) {
-			// Im still not sure how to avoid type assertion when importing json schemas in ts
+			// Type assertion seems unavoidable here
 			this._schemas.set(s[0], s[1] as StructureSchema);
 			this.ids.add(s[0]);
 		}
@@ -130,3 +130,5 @@ export class StructureSchemaManager {
 		}
 	}
 }
+
+export const structureSchemaManager = new StructureSchemaManager();

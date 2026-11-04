@@ -1,11 +1,18 @@
-import "./helpers/simulatedPlayers";
+import "./helpers/index";
 import { ItemStack, world } from "@minecraft/server";
 import { MinecraftDimensionTypes, MinecraftItemTypes } from "@minecraft/vanilla-data";
+import { BedWars } from "./bedwars";
 import { ItemGenerator } from "./tools/itemGenerator";
-import type { PlayerEliminationEvent } from "./tools/team";
-import { TeamManager } from "./tools/teamManager";
 
-world.afterEvents.worldLoad.subscribe(() => {
+let bedwars: BedWars | undefined;
+
+// biome-ignore lint/nursery/noMisusedPromises: Won't be using an async func here like this in final version just temporarily testing
+world.afterEvents.worldLoad.subscribe(async () => {
+	bedwars = new BedWars(1, 2, world.getDimension(MinecraftDimensionTypes.Overworld), {
+		x: 0,
+		z: 0,
+	});
+
 	const gen = new ItemGenerator(
 		{ x: 0.5, y: -63, z: 5.5 },
 		world.getDimension(MinecraftDimensionTypes.Overworld),
@@ -15,13 +22,6 @@ world.afterEvents.worldLoad.subscribe(() => {
 	);
 	gen.startup();
 
-	const teamManager = new TeamManager(1, 2);
-	teamManager.distribute(world.getAllPlayers());
-	teamManager.teams[0]?.bedManager.beds.push({
-		foot: { x: 0, y: -63, z: 0 },
-		head: { x: 0, y: -63, z: -1 },
-	});
-	teamManager.onPlayerElimination.subscribe((event: PlayerEliminationEvent): void => {
-		world.sendMessage(`${event.player.nameTag}§r§7 has been eliminated!`);
-	});
+	await bedwars.mapManager.initTickingArea();
+	bedwars.mapManager.clearWithAir();
 });
