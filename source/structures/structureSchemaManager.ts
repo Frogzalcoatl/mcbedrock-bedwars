@@ -27,7 +27,11 @@ export class StructureSchemaManager {
 		}
 	}
 
-	public addIds(ids: string[]): void {
+	public addSchema(id: string, schema: StructureSchema): void {
+		this._schemas.set(id, schema);
+	}
+
+	public addIds(...ids: string[]): void {
 		for (const id of ids) {
 			this.ids.add(id);
 		}
