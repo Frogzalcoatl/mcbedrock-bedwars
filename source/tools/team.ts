@@ -7,6 +7,7 @@ import {
 	world,
 } from "@minecraft/server";
 import { deathLocationTracker } from "../helpers/deathLocationTracker";
+import { ticksSinceDeath } from "../helpers/ticksSinceDeath";
 import { arrRemoveByCallback, arrRemoveSwap, EventSignal, type TeleportLocation } from "../types";
 import { BedManager } from "./bedManager";
 
@@ -150,8 +151,8 @@ export class Team {
 		player.onScreenDisplay.setTitle("§cYOU DIED!");
 		const oldGameMode: GameMode = player.getGameMode();
 		player.setGameMode(GameMode.Spectator);
-		const deathLocation: Vector3 | null = deathLocationTracker(player);
-		if (deathLocation !== null) {
+		const deathLocation: Vector3 | undefined = deathLocationTracker(player);
+		if (deathLocation !== undefined) {
 			player.teleport(deathLocation);
 		}
 		if (!this.canRespawn) {
@@ -164,6 +165,10 @@ export class Team {
 			return;
 		}
 		let ticksRemaining = this.respawnTimeTicks;
+		const ticksSincePlayerDeath: number | undefined = ticksSinceDeath(player);
+		if (ticksSincePlayerDeath !== undefined) {
+			ticksRemaining -= ticksSincePlayerDeath;
+		}
 		const intervalId: number = system.runInterval(() => {
 			if (ticksRemaining <= 0) {
 				if (player.isValid) {

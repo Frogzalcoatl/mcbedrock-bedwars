@@ -19,6 +19,6 @@ world.afterEvents.playerLeave.subscribe((event: PlayerLeaveAfterEvent) => {
 	deathLocations.delete(event.playerId);
 });
 
-export function deathLocationTracker(player: Player): Vector3 | null {
-	return deathLocations.get(player.id) ?? null;
+export function deathLocationTracker(player: Player): Vector3 | undefined {
+	return deathLocations.get(player.id);
 }

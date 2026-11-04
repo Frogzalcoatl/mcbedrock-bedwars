@@ -2,6 +2,7 @@ import "./helpers/simulatedPlayers";
 import { ItemStack, world } from "@minecraft/server";
 import { MinecraftDimensionTypes, MinecraftItemTypes } from "@minecraft/vanilla-data";
 import { ItemGenerator } from "./tools/itemGenerator";
+import type { PlayerEliminationEvent } from "./tools/team";
 import { TeamManager } from "./tools/teamManager";
 
 world.afterEvents.worldLoad.subscribe(() => {
@@ -19,5 +20,8 @@ world.afterEvents.worldLoad.subscribe(() => {
 	teamManager.teams[0]?.bedManager.beds.push({
 		foot: { x: 0, y: -63, z: 0 },
 		head: { x: 0, y: -63, z: -1 },
+	});
+	teamManager.onPlayerElimination.subscribe((event: PlayerEliminationEvent): void => {
+		world.sendMessage(`${event.player.nameTag}§r§7 has been eliminated!`);
 	});
 });
