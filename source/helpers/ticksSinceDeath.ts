@@ -23,5 +23,5 @@ export function ticksSinceDeath(player: Player): number | undefined {
 	if (timestamp === undefined) {
 		return undefined;
 	}
-	return (Date.now() - timestamp) / 50;
+	return Math.floor((Date.now() - timestamp) / 50);
 }
