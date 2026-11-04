@@ -5,6 +5,7 @@ import {
 	type CustomCommandResult,
 	CustomCommandStatus,
 	type Dimension,
+	type EntityDieAfterEvent,
 	GameMode,
 	type StartupEvent,
 	system,
@@ -14,6 +15,12 @@ import { SimulatedPlayer, spawnSimulatedPlayer } from "@minecraft/server-gametes
 import { MinecraftDimensionTypes } from "@minecraft/vanilla-data";
 import { PACK_NAMESPACE } from "../constants";
 import { getDimensionFromOrigin } from "./commandOrigin";
+
+world.afterEvents.entityDie.subscribe((event: EntityDieAfterEvent): void => {
+	if (event.deadEntity instanceof SimulatedPlayer) {
+		event.deadEntity.respawn();
+	}
+});
 
 system.beforeEvents.startup.subscribe((event: StartupEvent): void => {
 	event.customCommandRegistry.registerCommand(
