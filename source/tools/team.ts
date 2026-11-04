@@ -29,13 +29,18 @@ export interface PlayerEliminationEvent {
 }
 
 export class Team {
-	public colorCode: string;
 	public maxPlayers: number;
 	public name: string;
 	public readonly activePlayers: Player[];
 	public canRespawn: boolean;
 	public respawnTimeTicks: number;
 	public spawnPoint: TeleportLocation;
+
+	// Should relate to minecraft block/item ids
+	// For example, set to "white" to use in ids like "minecraft:white_wool"
+	public dyeColor: string;
+
+	public colorCode: string;
 	public readonly onSpawn: EventSignal<PlayerSpawnAfterEvent>;
 	// Elimination events are still triggered when player.isValid is false
 	public readonly onPlayerElimination: EventSignal<PlayerEliminationEvent>;
@@ -45,7 +50,6 @@ export class Team {
 	private _respawnIntervalIds: Map<string, number>; // key is playerId
 
 	public constructor(name: string, spawnPoint: Vector3, maxPlayers: number) {
-		this.colorCode = "§f";
 		this.maxPlayers = maxPlayers;
 		this.name = name;
 		this.activePlayers = [];
@@ -59,6 +63,8 @@ export class Team {
 			},
 			pos: spawnPoint,
 		};
+		this.colorCode = "§f";
+		this.dyeColor = "white";
 		this.onSpawn = new EventSignal<PlayerSpawnAfterEvent>();
 		this.onPlayerElimination = new EventSignal<PlayerEliminationEvent>();
 		this.onTeamElimination = new EventSignal<Team>();

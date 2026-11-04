@@ -4,18 +4,19 @@ import { type PlayerEliminationEvent, Team } from "./team";
 
 interface TeamOrdersValue {
 	colorCode: string;
+	dyeColor: string;
 	name: string;
 }
 
 const teamOrders: TeamOrdersValue[] = [
-	{ colorCode: "§c", name: "Red" },
-	{ colorCode: "§1", name: "Blue" },
-	{ colorCode: "§a", name: "Green" },
-	{ colorCode: "§e", name: "Yellow" },
-	{ colorCode: "§3", name: "Aqua" },
-	{ colorCode: "§f", name: "White" },
-	{ colorCode: "§d", name: "Pink" },
-	{ colorCode: "§8", name: "Gray" },
+	{ colorCode: "§c", dyeColor: "red", name: "Red" },
+	{ colorCode: "§1", dyeColor: "blue", name: "Blue" },
+	{ colorCode: "§a", dyeColor: "lime", name: "Green" },
+	{ colorCode: "§e", dyeColor: "yellow", name: "Yellow" },
+	{ colorCode: "§3", dyeColor: "cyan", name: "Aqua" },
+	{ colorCode: "§f", dyeColor: "white", name: "White" },
+	{ colorCode: "§d", dyeColor: "pink", name: "Pink" },
+	{ colorCode: "§8", dyeColor: "gray", name: "Gray" },
 ];
 
 export class TeamManager {
@@ -106,6 +107,7 @@ export class TeamManager {
 			if (current !== undefined) {
 				const team = new Team(current.name, { x: 0.5, y: 0, z: 0.5 }, this.playersPerTeam);
 				team.colorCode = current.colorCode;
+				team.dyeColor = current.dyeColor;
 				this.teams.push(team);
 				teamsAdded++;
 			}
