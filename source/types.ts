@@ -118,3 +118,56 @@ export function arrRemoveIndex<T>(arr: T[], i: number): T | undefined {
 	}
 	return undefined;
 }
+
+export const DyeColorId = {
+	White: "white",
+	Orange: "orange",
+	Magenta: "magenta",
+	LightBlue: "light_blue",
+	Yellow: "yellow",
+	Lime: "lime",
+	Pink: "pink",
+	Gray: "gray",
+	LightGray: "light_gray",
+	Cyan: "cyan",
+	Purple: "purple",
+	Blue: "blue",
+	Brown: "brown",
+	Green: "green",
+	Red: "red",
+	Black: "black",
+} as const;
+export type DyeColorId = (typeof DyeColorId)[keyof typeof DyeColorId];
+
+export const ColorCode = {
+	Black: "§0",
+	DarkBlue: "§1",
+	DarkGreen: "§2",
+	DarkAqua: "§3",
+	DarkRed: "§4",
+	DarkPurple: "§5",
+	Gold: "§6",
+	Gray: "§7",
+	DarkGray: "§8",
+	Blue: "§9",
+	Green: "§a",
+	Aqua: "§b",
+	Red: "§c",
+	LightPurple: "§d",
+	Yellow: "§e",
+	White: "§f",
+	MinecoinGold: "§g",
+	MaterialQuartz: "§h",
+	MaterialIron: "§i",
+	MaterialNetherite: "§j",
+	MaterialRedstone: "§m",
+	MaterialCopper: "§n",
+	MaterialGold: "§p",
+	MaterialEmerald: "§q",
+	MaterialDiamond: "§s",
+	MaterialLapis: "§t",
+	MaterialAmethyst: "§u",
+	MaterialResin: "§v",
+	PartyBlue: "§w",
+} as const;
+export type ColorCode = (typeof ColorCode)[keyof typeof ColorCode];

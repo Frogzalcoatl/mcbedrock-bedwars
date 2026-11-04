@@ -1,22 +1,22 @@
 import { type Player, type PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
-import { EventSignal } from "../types";
+import { ColorCode, DyeColorId, EventSignal } from "../types";
 import { type PlayerEliminationEvent, Team } from "./team";
 
 interface TeamOrdersValue {
-	colorCode: string;
-	dyeColor: string;
+	colorCode: ColorCode;
+	dyeColor: DyeColorId;
 	name: string;
 }
 
 const teamOrders: TeamOrdersValue[] = [
-	{ colorCode: "§c", dyeColor: "red", name: "Red" },
-	{ colorCode: "§1", dyeColor: "blue", name: "Blue" },
-	{ colorCode: "§a", dyeColor: "lime", name: "Green" },
-	{ colorCode: "§e", dyeColor: "yellow", name: "Yellow" },
-	{ colorCode: "§3", dyeColor: "cyan", name: "Aqua" },
-	{ colorCode: "§f", dyeColor: "white", name: "White" },
-	{ colorCode: "§d", dyeColor: "pink", name: "Pink" },
-	{ colorCode: "§8", dyeColor: "gray", name: "Gray" },
+	{ colorCode: ColorCode.Red, dyeColor: DyeColorId.Red, name: "Red" },
+	{ colorCode: ColorCode.DarkBlue, dyeColor: DyeColorId.Blue, name: "Blue" },
+	{ colorCode: ColorCode.Green, dyeColor: DyeColorId.Lime, name: "Green" },
+	{ colorCode: ColorCode.Yellow, dyeColor: DyeColorId.Yellow, name: "Yellow" },
+	{ colorCode: ColorCode.DarkAqua, dyeColor: DyeColorId.Cyan, name: "Aqua" },
+	{ colorCode: ColorCode.White, dyeColor: DyeColorId.White, name: "White" },
+	{ colorCode: ColorCode.LightPurple, dyeColor: DyeColorId.Pink, name: "Pink" },
+	{ colorCode: ColorCode.DarkGray, dyeColor: DyeColorId.Gray, name: "Gray" },
 ];
 
 export class TeamManager {

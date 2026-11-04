@@ -8,8 +8,16 @@ import {
 } from "@minecraft/server";
 import { deathLocationTracker } from "../helpers/deathLocationTracker";
 import { ticksSinceDeath } from "../helpers/ticksSinceDeath";
-import { arrRemoveByCallback, arrRemoveSwap, EventSignal, type TeleportLocation } from "../types";
+import {
+	arrRemoveByCallback,
+	arrRemoveSwap,
+	ColorCode,
+	DyeColorId,
+	EventSignal,
+	type TeleportLocation,
+} from "../types";
 import { BedManager } from "./bedManager";
+import type { ItemGenerator } from "./itemGenerator";
 
 world.afterEvents.playerSpawn.subscribe((event: PlayerSpawnAfterEvent) => {
 	if (event.initialSpawn) {
@@ -36,17 +44,16 @@ export class Team {
 	public respawnTimeTicks: number;
 	public spawnPoint: TeleportLocation;
 
-	// Should relate to minecraft block/item ids
-	// For example, set to "white" to use in ids like "minecraft:white_wool"
-	public dyeColor: string;
+	public dyeColor: DyeColorId;
 
-	public colorCode: string;
+	public colorCode: ColorCode;
 	public readonly onSpawn: EventSignal<PlayerSpawnAfterEvent>;
 	// Elimination events are still triggered when player.isValid is false
 	public readonly onPlayerElimination: EventSignal<PlayerEliminationEvent>;
 	public readonly onTeamElimination: EventSignal<Team>;
 	public readonly eliminatedPlayers: Player[];
 	public readonly bedManager: BedManager;
+	public itemGenerators: ItemGenerator[];
 	private _respawnIntervalIds: Map<string, number>; // key is playerId
 
 	public constructor(name: string, spawnPoint: Vector3, maxPlayers: number) {
@@ -63,8 +70,8 @@ export class Team {
 			},
 			pos: spawnPoint,
 		};
-		this.colorCode = "§f";
-		this.dyeColor = "white";
+		this.colorCode = ColorCode.White;
+		this.dyeColor = DyeColorId.White;
 		this.onSpawn = new EventSignal<PlayerSpawnAfterEvent>();
 		this.onPlayerElimination = new EventSignal<PlayerEliminationEvent>();
 		this.onTeamElimination = new EventSignal<Team>();
@@ -72,6 +79,7 @@ export class Team {
 		this.eliminatedPlayers = [];
 		this.bedManager = new BedManager(this);
 		this.bedManager.startup();
+		this.itemGenerators = [];
 		this._respawnIntervalIds = new Map<string, number>();
 	}
 
