@@ -87,7 +87,9 @@ export class BedWarsMapManager {
 			this.tickingAreaId,
 		);
 		if (tickingArea === undefined) {
-			world.sendMessage(`§cTicking area "${this.tickingAreaId}" for BedWarsMapManager is null`);
+			world.sendMessage(
+				`§cTicking area "${this.tickingAreaId}" for BedWarsMapManager is undefined`,
+			);
 			return false;
 		}
 		this._bounds = tickingArea.boundingBox;
@@ -101,7 +103,7 @@ export class BedWarsMapManager {
 		}
 		const map: BedWarsMap | undefined = this._maps.find((m) => m.name === mapName);
 		if (map === undefined) {
-			world.sendMessage(`§cUnable to load map "${mapName}": map is null`);
+			world.sendMessage(`§cUnable to load map "${mapName}": map is undefined`);
 			return false;
 		}
 		structureSchemaManager.load(map.structureId, this._bounds.min, this.dimension);
