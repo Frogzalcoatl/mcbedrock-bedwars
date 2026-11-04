@@ -1,4 +1,9 @@
-import { type EntityDieAfterEvent, Player, world } from "@minecraft/server";
+import {
+	type EntityDieAfterEvent,
+	Player,
+	type PlayerLeaveAfterEvent,
+	world,
+} from "@minecraft/server";
 
 const deathTimes = new Map<string, number>();
 
@@ -7,6 +12,10 @@ world.afterEvents.entityDie.subscribe((event: EntityDieAfterEvent): void => {
 		return;
 	}
 	deathTimes.set(event.deadEntity.id, Date.now());
+});
+
+world.afterEvents.playerLeave.subscribe((event: PlayerLeaveAfterEvent): void => {
+	deathTimes.delete(event.playerId);
 });
 
 export function ticksSinceDeath(player: Player): number | undefined {
