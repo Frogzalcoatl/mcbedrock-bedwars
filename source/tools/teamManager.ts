@@ -18,29 +18,6 @@ const teamOrders: TeamOrdersValue[] = [
 	{ colorCode: "§8", name: "Gray" },
 ];
 
-function initTeamOrders(manager: TeamManager, teamCount: number): void {
-	manager.teams.length = 0;
-	let teamsAdded = 0;
-	const maxI: number = Math.min(teamCount, teamOrders.length);
-	for (let i = 0; i < maxI; i++) {
-		const current: TeamOrdersValue | undefined = teamOrders[i];
-		if (current !== undefined) {
-			const team = new Team(current.name, { x: 0.5, y: 0, z: 0.5 }, manager.playersPerTeam);
-			team.colorCode = current.colorCode;
-			manager.teams.push(team);
-			teamsAdded++;
-		}
-	}
-	if (teamsAdded < teamCount) {
-		const remaining: number = teamCount - teamsAdded;
-		for (let i = 1; i <= remaining; i++) {
-			manager.teams.push(
-				new Team(`Extra-${i}`, { x: 0.5, y: 0, z: 0.5 }, manager.playersPerTeam),
-			);
-		}
-	}
-}
-
 export class TeamManager {
 	public playersPerTeam: number;
 	public readonly teams: Team[];
@@ -48,6 +25,7 @@ export class TeamManager {
 	public readonly onTeamElmination: EventSignal<Team>;
 	public readonly onTeamWin: EventSignal<Team[]>; // (length > 1) on tie
 	private readonly _teamsEliminatedThisTick: Team[];
+	private _teamCount: number;
 
 	public constructor(playersPerTeam: number, teamCount: number) {
 		this.playersPerTeam = playersPerTeam;
@@ -56,11 +34,12 @@ export class TeamManager {
 		this.onTeamElmination = new EventSignal<Team>();
 		this.onTeamWin = new EventSignal<Team[]>();
 		this._teamsEliminatedThisTick = [];
+		this._teamCount = teamCount;
+		this.initTeams();
 		for (const t of this.teams) {
 			t.onPlayerElimination.subscribe(this.playerEliminationCallback);
 			t.onTeamElimination.subscribe(this.teamEliminationCallback);
 		}
-		initTeamOrders(this, teamCount);
 		world.afterEvents.playerSpawn.subscribe(this.playerSpawn);
 	}
 
@@ -72,6 +51,15 @@ export class TeamManager {
 			}
 		}
 		return remaining;
+	}
+
+	public get teamCount(): number {
+		return this._teamCount;
+	}
+
+	public set teamCount(val: number) {
+		this._teamCount = val;
+		this.initTeams();
 	}
 
 	public find(player: Player): Team | undefined {
@@ -106,6 +94,27 @@ export class TeamManager {
 				}
 			}
 			currentTeam.join(p);
+		}
+	}
+
+	private initTeams(): void {
+		this.teams.length = 0;
+		let teamsAdded = 0;
+		const maxI: number = Math.min(this._teamCount, teamOrders.length);
+		for (let i = 0; i < maxI; i++) {
+			const current: TeamOrdersValue | undefined = teamOrders[i];
+			if (current !== undefined) {
+				const team = new Team(current.name, { x: 0.5, y: 0, z: 0.5 }, this.playersPerTeam);
+				team.colorCode = current.colorCode;
+				this.teams.push(team);
+				teamsAdded++;
+			}
+		}
+		if (teamsAdded < this._teamCount) {
+			const remaining: number = this._teamCount - teamsAdded;
+			for (let i = 1; i <= remaining; i++) {
+				this.teams.push(new Team(`Extra-${i}`, { x: 0.5, y: 0, z: 0.5 }, this.playersPerTeam));
+			}
 		}
 	}
 
