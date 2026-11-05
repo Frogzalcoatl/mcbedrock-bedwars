@@ -33,10 +33,10 @@ export class BedManager {
 	}
 
 	private playerBreakBlock = (event: PlayerBreakBlockBeforeEvent): void => {
-		const blockIndex: number = this.beds.findIndex((bedPos) =>
+		const bedIndex: number = this.beds.findIndex((bedPos) =>
 			insideBedPosition(bedPos, event.block.location),
 		);
-		if (blockIndex === -1) {
+		if (bedIndex === -1) {
 			return;
 		}
 		event.cancel = true;
@@ -47,7 +47,7 @@ export class BedManager {
 			event.player.sendMessage(`§cYou cannot break your own bed!`);
 			return;
 		}
-		const removedValue: BedPosition | undefined = arrRemoveIndex(this.beds, blockIndex);
+		const removedValue: BedPosition | undefined = arrRemoveIndex(this.beds, bedIndex);
 		if (removedValue !== undefined) {
 			system.run(() => {
 				event.block.dimension.setBlockType(removedValue.foot, MinecraftBlockTypes.Air);
