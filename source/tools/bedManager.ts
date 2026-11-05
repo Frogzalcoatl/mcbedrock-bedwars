@@ -1,6 +1,6 @@
 import { type PlayerBreakBlockBeforeEvent, system, type Vector3, world } from "@minecraft/server";
 import { MinecraftBlockTypes } from "@minecraft/vanilla-data";
-import { arrRemoveIndex } from "../types";
+import { arrRemoveIndexSwap } from "./shared/arrayHelpers";
 import type { Team } from "./team";
 
 function insideBedPosition(bedPos: BedPosition, vec: Vector3): boolean {
@@ -47,7 +47,7 @@ export class BedManager {
 			event.player.sendMessage(`§cYou cannot break your own bed!`);
 			return;
 		}
-		const removedValue: BedPosition | undefined = arrRemoveIndex(this.beds, bedIndex);
+		const removedValue: BedPosition | undefined = arrRemoveIndexSwap(this.beds, bedIndex);
 		if (removedValue !== undefined) {
 			system.run(() => {
 				event.block.dimension.setBlockType(removedValue.foot, MinecraftBlockTypes.Air);

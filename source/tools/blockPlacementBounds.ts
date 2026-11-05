@@ -5,7 +5,7 @@ import {
 	world,
 } from "@minecraft/server";
 import { MinecraftBlockTypes } from "@minecraft/vanilla-data";
-import { giveItemToEntity } from "../helpers/entityComponents";
+import { giveItemToEntity } from "./shared/componentUtils";
 
 export class BlockPlacementBounds {
 	public min: Vector3;

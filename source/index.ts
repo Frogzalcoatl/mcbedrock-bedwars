@@ -1,8 +1,13 @@
-import "./helpers/index";
 import { ItemStack, world } from "@minecraft/server";
 import { MinecraftDimensionTypes, MinecraftItemTypes } from "@minecraft/vanilla-data";
 import { BedWars } from "./bedwars";
+import { PACK_NAMESPACE } from "./constants";
 import { ItemGenerator } from "./tools/itemGenerator";
+import { registerSimulatedPlayerCommands } from "./tools/simulatedPlayers/commands";
+import { SimulatedPlayerManager } from "./tools/simulatedPlayers/manager";
+
+const simManager = new SimulatedPlayerManager(PACK_NAMESPACE, true);
+registerSimulatedPlayerCommands(simManager);
 
 let bedwars: BedWars | undefined;
 
@@ -23,5 +28,4 @@ world.afterEvents.worldLoad.subscribe(async () => {
 	gen.startup();
 
 	await bedwars.mapManager.initTickingArea();
-	bedwars.mapManager.clearWithAir();
 });

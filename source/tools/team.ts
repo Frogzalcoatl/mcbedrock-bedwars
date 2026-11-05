@@ -6,18 +6,14 @@ import {
 	type Vector3,
 	world,
 } from "@minecraft/server";
-import { deathLocationTracker } from "../helpers/deathLocationTracker";
-import { ticksSinceDeath } from "../helpers/ticksSinceDeath";
-import {
-	arrRemoveByCallback,
-	arrRemoveSwap,
-	ColorCode,
-	DyeColorId,
-	EventSignal,
-	type TeleportLocation,
-} from "../types";
+import { ColorCode, DyeColorId } from "../types";
 import { BedManager } from "./bedManager";
+import { type DeathLocation, getLastDeathLocation } from "./helpers/deathLocationTracker";
+import { ticksSinceDeath } from "./helpers/ticksSinceDeath";
 import type { ItemGenerator } from "./itemGenerator";
+import { arrRemoveByCallback, arrRemoveSwap } from "./shared/arrayHelpers";
+import { EventSignal } from "./shared/eventSignal";
+import type { TeleportLocation } from "./shared/locations";
 
 world.afterEvents.playerSpawn.subscribe((event: PlayerSpawnAfterEvent) => {
 	if (event.initialSpawn) {
@@ -165,9 +161,9 @@ export class Team {
 		player.onScreenDisplay.setTitle("§cYOU DIED!");
 		const oldGameMode: GameMode = player.getGameMode();
 		player.setGameMode(GameMode.Spectator);
-		const deathLocation: Vector3 | undefined = deathLocationTracker(player);
+		const deathLocation: DeathLocation | undefined = getLastDeathLocation(player);
 		if (deathLocation !== undefined) {
-			player.teleport(deathLocation);
+			player.teleport(deathLocation.pos, { dimension: deathLocation.dimension });
 		}
 		if (!this.canRespawn) {
 			this.eliminate(player);

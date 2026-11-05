@@ -11,6 +11,8 @@ import {
 	type EntityEquippableComponent,
 	type EntityHealthComponent,
 	type EntityInventoryComponent,
+	type EntityRideableComponent,
+	type EntityRidingComponent,
 	EquipmentSlot,
 	ItemComponentTypes,
 	type ItemDurabilityComponent,
@@ -20,7 +22,8 @@ import {
 	type Vector3,
 } from "@minecraft/server";
 import { MinecraftEffectTypes } from "@minecraft/vanilla-data";
-import { MAX_EFFECT_DURATION } from "../constants";
+
+export const MAX_EFFECT_DURATION: number = 2e7;
 
 export function removeItem(container: Container, item: ItemStack, amount: number): void {
 	const itemIndex = container.find(item);
@@ -224,5 +227,20 @@ export function hubEffectHelper(player: Player): void {
 	);
 	if (health !== undefined) {
 		health.resetToMaxValue();
+	}
+}
+
+export function ejectFromMount(entity: Entity): void {
+	const riding: EntityRidingComponent | undefined = entity.getComponent(
+		EntityComponentTypes.Riding,
+	);
+	if (riding === undefined || !riding.entityRidingOn.isValid) {
+		return;
+	}
+	const rideable: EntityRideableComponent | undefined = riding.entityRidingOn.getComponent(
+		EntityComponentTypes.Rideable,
+	);
+	if (rideable !== undefined) {
+		rideable.ejectRider(entity);
 	}
 }

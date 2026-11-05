@@ -1,5 +1,6 @@
 import { type Player, type PlayerSpawnAfterEvent, system, world } from "@minecraft/server";
-import { ColorCode, DyeColorId, EventSignal } from "../types";
+import { ColorCode, DyeColorId } from "../types";
+import { EventSignal } from "./shared/eventSignal";
 import { type PlayerEliminationEvent, Team } from "./team";
 
 interface TeamOrdersValue {

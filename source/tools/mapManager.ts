@@ -10,9 +10,9 @@ import {
 } from "@minecraft/server";
 import { MinecraftBlockTypes } from "@minecraft/vanilla-data";
 import { type StructureSchema, structureSchemaManager } from "../structures/structureSchemaManager";
-import { vector3ToString } from "../types";
 import type { BedPosition } from "./bedManager";
 import type { ItemGenerator } from "./itemGenerator";
+import { vector3ToString } from "./shared/locations";
 
 export interface MapTeamData {
 	beds: BedPosition[];
